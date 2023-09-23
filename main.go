@@ -12,6 +12,7 @@ type BookKeeper struct {
 }
 
 func NewBookKeeper(name, id, phoneNumber string) *BookKeeper {
+	fmt.Printf("NewBookKeeper name: %s, id: %s, phoneNumber: %s\n", name, id, phoneNumber)
 	return &BookKeeper{
 		name:        name,
 		id:          id,
@@ -32,12 +33,24 @@ func (bk *BookKeeper) getNameAndPhoneNumber() (string, string) {
 }
 
 func main() {
-	bk :=  NewBookKeeper("John", "123456789", "1234567890")
+	var once sync.Once
+	done := make(chan bool)
+	var bk *BookKeeper
+	for i := 0; i < 5; i++ {
+		go func() {
+			once.Do(func() { bk = NewBookKeeper("John", "123456789", "1234567890") })
+			done <- true
+		}()
+	}
+
+	for i := 0; i < 5; i++ {
+		<-done
+	}
 
 	// sync.OnceFunc
-	once := sync.OnceFunc(bk.helloWorld)
+	printHelloWorld := sync.OnceFunc(bk.helloWorld)
 	for i := 0; i < 5; i++ {
-		once()
+		printHelloWorld()
 	}
 
 	// sync.OnceValue
