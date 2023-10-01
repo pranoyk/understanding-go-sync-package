@@ -1,0 +1,18 @@
+NewBookKeeper name: John, id: 123456789, phoneNumber: 1234567890
+Hello World!
+goos: linux
+goarch: amd64
+pkg: github.com/pranoyk/understanding-go-sync-package/synconce
+cpu: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+
+BenchmarkSyncOnceFunc/sync.Once-8           108152	     12726 ns/op	     112 B/op	       5 allocs/op
+BenchmarkSyncOnceFunc/sync.OnceFunc-8       98750	     12625 ns/op	     112 B/op	       5 allocs/op
+
+BenchmarkSyncOnceValue/sync.Once-8          98923	     12269 ns/op	     128 B/op	       6 allocs/op
+BenchmarkSyncOnceValue/sync.OnceValue-8     98172	     11612 ns/op	     128 B/op	       6 allocs/op
+
+BenchmarkSyncOnceValues/sync.Once-8         109572	     11756 ns/op	     144 B/op	       7 allocs/op
+BenchmarkSyncOnceValues/sync.OnceValues-8 	84013	     12082 ns/op	     144 B/op	       7 allocs/op
+
+PASS
+ok  	github.com/pranoyk/understanding-go-sync-package/synconce	8.033s
